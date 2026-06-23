@@ -1,0 +1,206 @@
+# ==========================================
+# 招标文件智能生成系统 - 配置文件模板
+# ==========================================
+
+# 大模型配置 (DeepSeek)
+deepseek:
+  # API密钥（从 https://platform.deepseek.com 获取）
+  api_key: "${DEEPSEEK_API_KEY}"
+  
+  # 模型名称
+  model: "deepseek-chat"
+  
+  # API基础URL
+  api_base: "https://api.deepseek.com/v1"
+  
+  # 模型参数
+  temperature: 0.7          # 创意度 (0-1)
+  max_tokens: 8000         # 最大生成token
+  top_p: 0.95             # 核采样
+
+# 本地资料库配置
+repository:
+  # 资料库根目录路径
+  # Windows示例: "C:\\company_docs"
+  # macOS/Linux示例: "/Users/username/company_docs"
+  root_path: "/path/to/your/company/docs"
+  
+  # 支持的文件格式
+  supported_formats:
+    - "*.md"
+    - "*.docx"
+    - "*.pdf"
+    - "*.txt"
+  
+  # 资料库分类子目录
+  subdirs:
+    - name: "solutions"
+      description: "实施方案库"
+      priority: 1
+    - name: "qualifications"
+      description: "资质模板库"
+      priority: 2
+    - name: "cases"
+      description: "过往中标案例"
+      priority: 3
+    - name: "promises"
+      description: "服务承诺库"
+      priority: 4
+    - name: "templates"
+      description: "通用模板库"
+      priority: 5
+  
+  # 向量缓存配置
+  vector_cache:
+    # 缓存存储目录
+    cache_dir: "./data/vector_cache"
+    
+    # 向量模型
+    embedding_model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    
+    # 向量维度
+    embedding_dim: 384
+    
+    # 缓存失效时间（天）
+    cache_ttl_days: 30
+    
+    # 单次检索返回数量
+    search_top_k: 5
+
+# 投标文件生成配置
+document:
+  # 输出目录
+  output_dir: "./output/bidding_documents"
+  
+  # 模板位置
+  template_path: "./templates/bidding_document.docx"
+  
+  # 自动生成内容样式
+  auto_generated_style:
+    color: "C0C0C0"  # 灰色
+    italic: true
+  
+  # 人工补充内容样式
+  manual_input_style:
+    color: "FF0000"  # 红色
+    bold: true
+
+# 时间计划表配置
+timeline:
+  # 时间计划模板位置
+  template_path: "./templates/project_timeline.json"
+  
+  # 关键节点（距离截止时间的天数）
+  critical_milestones:
+    资料准备_提前天数: 7
+    资质整理_提前天数: 5
+    标书编制_提前天数: 3
+    盖章封装_提前天数: 1
+    保证金缴纳_提前天数: 0
+
+# 评分规则配置
+scoring:
+  # 评分模板位置
+  template_path: "./templates/scoring_template.json"
+  
+  # 评分分类
+  categories:
+    - name: "商务分"
+      weight: 0.25
+    - name: "技术分"
+      weight: 0.50
+    - name: "价格分"
+      weight: 0.25
+  
+  # 满分
+  max_score: 100
+
+# 功能开关
+features:
+  # 是否启用CLI交互界面
+  auto_interact: true
+  
+  # 版本管理
+  version_management: true
+  
+  # 得分模拟
+  scoring_simulation: true
+  
+  # 自动保存
+  auto_save: true
+  
+  # 自动备份（每次修改）
+  auto_backup: true
+
+# 存储配置
+storage:
+  # 项目数据存储目录
+  projects_dir: "./data/projects"
+  
+  # 版本历史存储
+  versions_dir: "./data/versions"
+  
+  # 操作日志存储
+  logs_dir: "./data/logs"
+  
+  # 临时文件目录
+  temp_dir: "./data/temp"
+  
+  # 数据库类型 (sqlite/postgresql)
+  db_type: "sqlite"
+  
+  # SQLite数据库文件
+  sqlite_path: "./data/bidding.db"
+
+# 日志配置
+logging:
+  # 日志级别 (DEBUG/INFO/WARNING/ERROR/CRITICAL)
+  level: "INFO"
+  
+  # 日志格式
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name} | {message}"
+  
+  # 日志输出目录
+  output_dir: "./data/logs"
+  
+  # 日志文件保留天数
+  retention_days: 30
+
+# Token��理配置
+token_management:
+  # 启用token计数
+  enable_token_counting: true
+  
+  # 最大单次请求token数
+  max_tokens_per_request: 8000
+  
+  # 文本自动分段大小（字符数）
+  chunk_size: 3000
+  
+  # 分段重叠（字符数）
+  chunk_overlap: 200
+
+# 人工交互配置
+interaction:
+  # 是否显示进度条
+  show_progress: true
+  
+  # 交互超时时间（秒）
+  interaction_timeout: 300
+  
+  # 必填项检查
+  strict_mode: true
+  
+  # 确认提示
+  confirm_before_export: true
+
+# 开发者配置
+developer:
+  # 调试模式
+  debug: false
+  
+  # 是否保留中间文件
+  keep_temp_files: false
+  
+  # API请求日志
+  log_api_requests: true
